@@ -253,6 +253,16 @@ describe Lita::DefaultConfiguration, lita: true do
       expect(config.robot.log_level).to eq(:debug)
     end
 
+    it "has a default redis namespace" do
+      expect(config.robot.redis_namespace).to eq(Lita::DefaultConfiguration::REDIS_NAMESPACE)
+    end
+
+    it "can set a redis namespace" do
+      config.robot.redis_namespace = "foobar"
+
+      expect(config.robot.redis_namespace).to eq("foobar")
+    end
+
     it "allows strings and mixed case as log levels" do
       expect { config.robot.log_level = "dEbUg" }.not_to raise_error
     end

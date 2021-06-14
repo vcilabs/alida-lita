@@ -6,6 +6,9 @@ module Lita
     # Valid levels for Lita's logger.
     LOG_LEVELS = %w(debug info warn error fatal)
 
+    # The base Redis namespace for all Lita data.
+    REDIS_NAMESPACE = "lita"
+
     # A {Registry} to extract configuration for plugins from.
     # @return [Lita::Registry] The registry.
     attr_reader :registry
@@ -132,6 +135,7 @@ module Lita
         config :adapter, types: [String, Symbol], default: :shell
         config :locale, types: [String, Symbol], default: I18n.locale
         config :default_locale, types: [String, Symbol], default: I18n.default_locale
+        config :redis_namespace, types: String, default: REDIS_NAMESPACE
         config :log_level, types: [String, Symbol], default: :info do
           validate do |value|
             unless LOG_LEVELS.include?(value.to_s.downcase.strip)

@@ -19,9 +19,6 @@ require_relative "lita/registry"
 # The main namespace for Lita. Provides a global registry of adapters and
 # handlers, as well as global configuration, logger, and Redis store.
 module Lita
-  # The base Redis namespace for all Lita data.
-  REDIS_NAMESPACE = "lita"
-
   class << self
     include Registry::Mixins
 
@@ -48,7 +45,7 @@ module Lita
     def redis
       @redis ||= begin
         redis = Redis.new(config.redis)
-        Redis::Namespace.new(REDIS_NAMESPACE, redis: redis).tap do |client|
+        Redis::Namespace.new(config.robot.redis_namespace, redis: redis).tap do |client|
           begin
             client.ping
           rescue Redis::BaseError => e
