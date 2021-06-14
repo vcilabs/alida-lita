@@ -35,7 +35,7 @@ module Lita
           before do
             logger = double("Logger").as_null_object
             allow(Lita).to receive(:logger).and_return(logger)
-            stub_const("Lita::REDIS_NAMESPACE", "lita.test")
+            stub_const("Lita::DefaultConfiguration::REDIS_NAMESPACE", "lita.test")
             keys = Lita.redis.keys("*")
             Lita.redis.del(keys) unless keys.empty?
             registry.clear_config if Lita.version_3_compatibility_mode?
